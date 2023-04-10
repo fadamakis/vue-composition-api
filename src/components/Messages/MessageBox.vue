@@ -1,16 +1,12 @@
-<script>
+<script setup>
 import icon from "@/components/common/icons/icon.vue";
-export default {
-  components: {
-    icon,
+
+defineProps({
+  message: {
+    type: Object,
+    required: true,
   },
-  props: {
-    message: {
-      type: Object,
-      required: true,
-    },
-  },
-};
+});
 </script>
 
 <template>

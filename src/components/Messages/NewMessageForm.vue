@@ -1,18 +1,14 @@
-<script>
-export default {
-  data() {
-    return {
-      newMessage: "",
-    };
-  },
-  emits: ["addMessage"],
-  methods: {
-    addMessage() {
-      this.$emit("addMessage", this.newMessage);
-      this.newMessage = "";
-    },
-  },
-};
+<script setup>
+import { ref } from "vue";
+
+const newMessage = ref("");
+
+const emit = defineEmits(["addMessage"]);
+
+function addMessage() {
+  emit("addMessage", newMessage.value);
+  newMessage.value = "";
+}
 </script>
 
 <template>

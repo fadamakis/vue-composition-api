@@ -1,17 +1,13 @@
-<script>
-export default {
-  props: {
-    discount: {
-      type: Number,
-      required: true,
-    },
+<script setup>
+import { computed } from "vue";
+
+const props = defineProps({
+  discount: {
+    type: Number,
+    required: true,
   },
-  computed: {
-    formattedDiscount() {
-      return `-${this.discount}%`;
-    },
-  },
-};
+});
+const formattedDiscount = computed(() => `-${props.discount}%`);
 </script>
 
 <template>

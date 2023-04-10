@@ -1,7 +1,10 @@
-<script>
-export default {
-  props: ["products"],
-};
+<script setup>
+defineProps({
+  products: {
+    type: Array,
+    required: true,
+  },
+});
 </script>
 
 <template>

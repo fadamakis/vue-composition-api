@@ -1,54 +1,45 @@
-<script>
+<script setup>
 import { debounce } from "debounce";
 import SearchResults from "./SearchResults.vue";
 import icon from "@/components/common/icons/icon.vue";
 
-export default {
-  components: {
-    SearchResults,
-    icon,
-  },
-  data() {
-    return {
-      searchTerm: "",
-      products: [],
-    };
-  },
-  watch: {
-    searchTerm() {
-      this.performSearch();
-    },
-  },
-  methods: {
-    performSearch: debounce(async function () {
-      if (this.searchTerm === "") {
-        this.products = [];
-        return;
-      }
-      if (this.searchTerm.length < 2) {
-        return;
-      }
-      const searchUrl = this.getSearchUrl();
-      const response = await (await fetch(searchUrl)).json();
+import { ref, watch } from "vue";
 
-      this.products = response.products;
-    }, 600),
-    getSearchUrl() {
-      const url = "https://dummyjson.com/products/search";
-      const params = {
-        q: this.searchTerm,
-        limit: "5",
-      };
+const searchTerm = ref("");
+const products = ref([]);
 
-      const searchParams = new URLSearchParams(params);
-      return `${url}?${searchParams}`;
-    },
-    clearSearch() {
-      this.searchTerm = "";
-      this.products = [];
-    },
-  },
-};
+watch(searchTerm, () => {
+  performSearch();
+});
+
+const performSearch = debounce(async function () {
+  if (searchTerm.value === "") {
+    products.value = [];
+    return;
+  }
+  if (searchTerm.value.length < 2) {
+    return;
+  }
+  const searchUrl = getSearchUrl();
+  const response = await (await fetch(searchUrl)).json();
+
+  products.value = response.products;
+}, 600);
+
+function getSearchUrl() {
+  const url = "https://dummyjson.com/products/search";
+  const params = {
+    q: searchTerm.value,
+    limit: "5",
+  };
+
+  const searchParams = new URLSearchParams(params);
+  return `${url}?${searchParams}`;
+}
+function clearSearch() {
+  searchTerm.value = "";
+  products.value = [];
+}
 </script>
 
 <template>

@@ -1,35 +1,27 @@
-<script>
+<script setup>
 import MessageBox from "@/components/Messages/MessageBox.vue";
 import NewMessageForm from "@/components/Messages/NewMessageForm.vue";
-import messages from "@/mock/messages.js";
+import mockMessages from "@/mock/messages.js";
 import useAuth from "@/composables/useAuth.js";
 
-export default {
-  components: {
-    MessageBox,
-    NewMessageForm,
-  },
-  data() {
-    return {
-      messages,
-      newMessage: "",
-    };
-  },
-  methods: {
-    addMessage(newMessage) {
-      const { user } = useAuth();
-      this.messages.push({
-        name: user.name,
-        line: newMessage,
-        time: "Just now",
-        avatar: user.avatar,
-      });
-    },
-    toggleFavorite(message) {
-      message.favorited = !message.favorited;
-    },
-  },
-};
+import { reactive } from "vue";
+
+const messages = reactive(mockMessages);
+
+const { user } = useAuth();
+
+function addMessage(newMessage) {
+  messages.push({
+    name: user.name,
+    line: newMessage,
+    time: "Just now",
+    avatar: user.avatar,
+  });
+}
+
+function toggleFavorite(message) {
+  message.favorited = !message.favorited;
+}
 </script>
 
 <template>

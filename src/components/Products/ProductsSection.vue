@@ -1,30 +1,20 @@
-<script>
+<script setup>
 import ProductCard from "@/components/Products/ProductCard.vue";
 import LoadingSpinner from "@/components/common/LoadingSpinner.vue";
 import { getFormattedDate } from "@/utils/helpers.js";
 
-export default {
-  components: {
-    ProductCard,
-    LoadingSpinner,
-  },
-  data() {
-    return {
-      products: [],
-    };
-  },
-  computed: {
-    today() {
-      return getFormattedDate(new Date());
-    },
-  },
-  async mounted() {
-    const response = await fetch("https://dummyjson.com/products").then((res) =>
-      res.json()
-    );
-    this.products = response.products;
-  },
-};
+import { ref, computed, onMounted } from "vue";
+
+const today = computed(() => getFormattedDate(new Date()));
+
+const products = ref([]);
+
+onMounted(async () => {
+  const response = await fetch("https://dummyjson.com/products").then((res) =>
+    res.json()
+  );
+  products.value = response.products;
+});
 </script>
 <template>
   <div class="products-section">
@@ -32,6 +22,7 @@ export default {
       <p>Products</p>
       <p class="time">{{ today }}</p>
     </h2>
+
     <div class="products" v-if="products.length">
       <ProductCard
         v-for="product in products"

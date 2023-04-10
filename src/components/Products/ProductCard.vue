@@ -1,18 +1,18 @@
-<script>
+<script setup>
 import ProductDiscount from "./ProductDiscount.vue";
 import ProductRating from "./ProductRating.vue";
+
+defineProps({
+  product: {
+    type: Object,
+    required: true,
+  },
+});
+</script>
+
+<script>
 export default {
   name: "ProductCard",
-  components: {
-    ProductDiscount,
-    ProductRating,
-  },
-  props: {
-    product: {
-      type: Object,
-      required: true,
-    },
-  },
 };
 </script>
 

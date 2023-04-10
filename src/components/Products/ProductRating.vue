@@ -1,12 +1,10 @@
-<script>
-export default {
-  props: {
-    rating: {
-      type: Number,
-      required: true,
-    },
+<script setup>
+defineProps({
+  rating: {
+    type: Number,
+    required: true,
   },
-};
+});
 </script>
 
 <template>
